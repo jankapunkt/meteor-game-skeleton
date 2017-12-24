@@ -12,7 +12,14 @@ Accounts.methods = {
     userExists:{
         name:"accounts.methods.userExists",
         schema:{
-            username:String,
+            username:{
+                type:String,
+                optional:true,
+            },
+            email:{
+                type:String,
+                optional:true,
+            }
         },
         isPublic:true,
     },

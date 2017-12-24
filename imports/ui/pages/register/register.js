@@ -1,69 +1,93 @@
 import {Tracker} from 'meteor/tracker';
-import SimpleSchema from 'simpl-schema';
 import {Meteor} from 'meteor/meteor';
-import {i18n} from "../../../api/language/i18n";
-import {createCallback} from "../../helpers/Callbacks";
+import {Template} from 'meteor/templating';
+import {ReactiveDict} from 'meteor/reactive-dict'
+import SimpleSchema from 'simpl-schema';
 
-const registerSchema = new SimpleSchema({
-    username:{
-        type:String,
-        label:i18n.get("accounts.username"),
-        autoform: {
-            afFieldInput: {
-                class: "username-input"
-            }
-        }
-    },
-    email:{
-        type:String,
-        label:i18n.get("accounts.email"),
-    },
-    password:{
-        type:String,
-        label:i18n.get("accounts.password"),
-    },
-    confirmPassword:{
-        type:String,
-        label:i18n.get("accounts.confirmPassword"),
-    },
-    terms:{
-        type:Boolean,
-        label:i18n.get("register.termsAndConditions")
-    }
-}, {tracker:Tracker})
+import {Register} from "../../../api/accounts/Register";
+
+import {createCallback} from "../../helpers/Callbacks";
+const registerSchema = new SimpleSchema(Register.schema, {tracker: Tracker})
 
 import './register.html';
+import {Routes} from "../../../api/routes/Routes";
+import {validateEmail, ValidEmail} from "../../../api/utils/CheckUtils";
 
+Template.register.onCreated(function () {
+
+    const instance = this;
+    instance.state = new ReactiveDict();
+    instance.state.set("errors", {});
+
+});
 
 Template.register.helpers({
 
-    schema(){
+    schema() {
         return registerSchema;
+    },
+
+    loginRoute(){
+        return Routes.login.path;
     }
 });
 
 Template.register.events({
 
-    'submit #regsterForm'(event, instance) {
+    'submit #registerForm'(event, instance) {
         event.preventDefault();
+        const errors = instance.state.get("errors");
+
+        if (Object.keys(errors).length > 0) return;
     },
 
     'blur .username-input'(event, instance) {
         const value = $(event.currentTarget).val();
+        checkUser( Register.types.username, value,  Register.messages.usernameAlreadyUsed, instance);
+    },
 
-        Meteor.call(Accounts.methods.userExists.name, {username: value}, createCallback({
-            instance:instance,
-            onRes(exists){
-                if (exists === true) {
-                    $('.username-input').removeClass("has-success");
-                    AutoForm.addStickyValidationError("registerForm", "username", "error", "Username exists");
-                }
-                if (exists === false) {
-                    AutoForm.removeStickyValidationError("registerForm", "username");
-                    $('.username-input').addClass("has-success");
-                }
-            }
-        }));
-    }
+    'blur .email-input'(event, instance) {
+        const value = $(event.currentTarget).val();
+
+        if (updateErrors(!validateEmail(value), Register.types.email, Register.messages.emailInvalid, instance)) {
+            return;
+        }
+
+        checkUser( Register.types.email, value,  Register.messages.emailAlreadyUsed, instance);
+    },
+
+    'blur .confirm-input'(event, instance) {
+        const confirm = $(event.currentTarget).val();
+        const password = $('.password-input').val();
+
+        updateErrors((confirm === password),
+            Register.types.confirm,
+            Register.messages.confirmNotMatching,
+            instance);
+    },
 
 });
+
+
+const checkUser = function(type, value, message, instance) {
+    const doc = {[type]:value};
+    Meteor.call(Accounts.methods.userExists.name, doc, createCallback({
+        instance: instance,
+        onRes(exists) {
+            updateErrors(exists, type, message, this);
+        }
+    }));
+};
+
+const updateErrors = function (hasError, type, message, instance) {
+    const errors = instance.state.get("errors");
+    if (hasError) {
+        AutoForm.addStickyValidationError("registerForm", type, message);
+        errors[type] = true;
+    }else{
+        AutoForm.removeStickyValidationError("registerForm", type);
+        delete errors[type];
+    }
+    instance.state.set("errors", errors);
+    return hasError
+};

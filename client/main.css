@@ -19,3 +19,5 @@
 .game-title {
 
 }
+
+[data-required] label:after {content: ' *'}
