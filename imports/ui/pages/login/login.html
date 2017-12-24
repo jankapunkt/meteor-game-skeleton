@@ -1,0 +1,26 @@
+<template name="login">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="jumbotron">
+				<h1 class="text-center">{{settings.title}}</h1>
+				<p class="text-center">{{i18n "login.title"}}</p>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-md-6 col-md-offset-3">
+			{{> quickForm id="loginForm"
+					schema=schema
+					buttonClasses="btn btn-primary btn-block"
+					buttonContent=(i18n 'form.submit')
+					type="normal"
+					validation="submitThenBlur"}}
+			<br>
+			<div class="panel panel-default">
+				<div class="panel-body text-center">
+					<a href="{{registerRoute}}">{{i18n 'login.register'}}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

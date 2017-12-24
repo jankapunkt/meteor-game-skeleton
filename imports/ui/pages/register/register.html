@@ -1,0 +1,20 @@
+<template name="register">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="jumbotron">
+				<h1 class="text-center">{{settings.title}}</h1>
+				<p class="text-center">{{i18n "register.title"}}</p>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-md-6 col-md-offset-3">
+	{{> quickForm id="registerForm"
+			schema=schema
+			buttonClasses="btn btn-success btn-block"
+			buttonContent=(i18n 'form.submit')
+			type="normal"
+			validation="submitThenBlur"}}
+		</div>
+	</div>
+</template>

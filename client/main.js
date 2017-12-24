@@ -1,22 +1,20 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+// PACKAGES
+import bootstrap from 'bootstrap';
+import '../public/css/theme.css';
+
+// HELPERS
+import '../imports/ui/helpers/TemplateHelpers';
+
+// STARTUP
+import '../imports/api/language/i18n';
+import '../imports/startup/both/accounts';
+import '../imports/startup/both/schema';
+import '../imports/startup/client/routes';
+
+
+// MAIN
 import './main.html';
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-});
-
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
-
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
-});

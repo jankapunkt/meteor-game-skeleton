@@ -1,0 +1,14 @@
+{
+    "public":{
+        "title":"My Game",
+        "slogan":"Because it's awesome!",
+        "layout":{
+            "container":"container"
+        }
+    },
+    "private":{
+        "mongo":{
+            "url":"mongodb://user:pw@externalurl:27017/dbname"
+        }
+    }
+}
