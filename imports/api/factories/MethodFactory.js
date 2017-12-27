@@ -2,7 +2,7 @@ import {check, Match} from 'meteor/check';
 import {ValidatedMethod} from 'meteor/mdg:validated-method';
 import SimpleSchema from 'simpl-schema';
 
-import {NonEmptyObject} from "../utils/CheckUtils";
+import {MaybeEmptyObject, NonEmptyObject} from "../utils/CheckUtils";
 import {AccountsUtils} from "../utils/AccountsUtils";
 
 export const MethodFactory = {
@@ -10,7 +10,7 @@ export const MethodFactory = {
     definitionsMatch: {
         // REQUIRED
         name: String,
-        schema: NonEmptyObject,
+        schema: MaybeEmptyObject,
         run: Function,
         // OPTIONAL
         isPublic: Match.Maybe(Boolean),

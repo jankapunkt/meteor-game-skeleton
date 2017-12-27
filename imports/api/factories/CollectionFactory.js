@@ -5,28 +5,23 @@ import {NonEmptyObject} from "../utils/CheckUtils";
 
 export const CollectionFactory = {
 
-    definitionsMatch:{
-        name:String,
-        schema:NonEmptyObject,
-        hooks:Match.Maybe({
+    create(definitions) {
+        check(definitions.name, String);
+        check(definitions.schema, NonEmptyObject);
+        check(definitions.preventSchemaDefaults, Match.Maybe(Boolean));
+        // TODO check options
+        check(definitions.hooks, Match.Maybe({
             insert:Function,
             update:Function,
             remove:Function,
             afterInsert:Function,
             afterUpdate:Function,
             afterRemove:Function,
-        }),
-
-        ///////////////
-        preventSchemaDefaults:Match.Maybe(Boolean),
-    },
-
-    create(definitions) {
-        check(definitions, this.definitionsMatch);
+        }));
 
         const options = definitions.options || {};
         const hooks = definitions.hooks || {};
-        const schema = new SimpleSchema(schema);
+        const schema = new SimpleSchema(definitions.schema);
         const collection = new FactoryCollection(definitions.name, options, hooks);
         collection.deny({
             insert:()=>{return true},
