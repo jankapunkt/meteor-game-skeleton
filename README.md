@@ -12,7 +12,8 @@ A Meteor skeleton app as foundation for games.
 ### General Vision and Use Case
 
 * Provide out-of the box runnable app template for browser based games
-* Core-features like user login, registration, minimal application cycle
+* Core-features like routing, translation, user login, registration, logging
+* Minimal application cycle, extensible for many gaming variations
 * Extensible API, providig only the most basic functionalities
 * Server side methods and api decouples from ui (to allow developers to choose their own rendering engine)
 * Minimal app but fully tested
@@ -27,8 +28,61 @@ A Meteor skeleton app as foundation for games.
 <img src="./diagrams/pooling.svg" />
 
 
-
 # Conventions
+
+### Class Structure
+
+There are no real 'classes' in use. However, most API definitions are exported as a constant (non-freezed) object, following a certain structure:
+
+```javascript
+export const SomeDefinition = {
+
+    // will be the name of the collection that is created for this definition
+    name:"someName",
+
+    // i18n compatible definition for a translated name
+    label:"someName.title",
+
+    // fontawesome icon name without any preceeding 'fa-' naming
+    icon:"database",
+
+    // schmema of the collection, attached and checked using aldeed:collection2-core package
+    schema:{ /*...*/ },
+
+    // defining meteor-methods to be passed to a method factory
+    methods:{ /*...*/ },
+
+    // defining meteor-methods to be passed to a method factory
+    methods:{ /*...*/ },
+
+    // dependencies from other API definitions to be loaded as subscriptions,
+    // usually defined in the dependant's publications
+    dependencies:[ {/*..*/} ],
+
+    // define helper functions
+    helpers:{ /*...*/ },
+}
+```
+
+The definitions are passed into the factories (`CollectionFactory`, `MethodFactory`, `PublicationFactory`) in order to build the initial application structure.
+
+```javascript
+{
+    methods:{
+
+        // definition of a method
+        update:{
+
+            // name, used to be called by Metor.call
+            name:"someObject.method.name",
+
+            // schema to validate parameters, used in `validate` (see `mdg:validated-method`)
+            schema:{ /*...*/ },
+        }
+    }
+}
+
+```
 
 ### DRY
 
