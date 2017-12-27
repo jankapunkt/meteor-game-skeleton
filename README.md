@@ -1,5 +1,14 @@
+[![Build Status](https://travis-ci.org/jankapunkt/meteor-game-skeleton.svg?branch=master)](https://travis-ci.org/jankapunkt/meteor-game-skeleton)
+[![Maintainability](https://api.codeclimate.com/v1/badges/45bba8e2030280fd6000/maintainability)](https://codeclimate.com/github/jankapunkt/meteor-game-skeleton/maintainability)
+[![GitLicense](https://gitlicense.com/badge/jankapunkt/meteor-game-skeleton)](https://gitlicense.com/license/jankapunkt/meteor-game-skeleton)
+
+
 # meteor-game-skeleton
-A skeleton app as foundation for games.
+
+A Meteor skeleton app as foundation for games.
+
+# About the Template
+
 
 
 # Conventions
