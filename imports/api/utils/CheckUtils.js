@@ -15,10 +15,12 @@ export const NonNull = Match.Where((any) => {
 });
 
 export const ObjectType = Match.Where((obj) => {
-    if (typeof obj !== 'object') return false;
+    return typeof obj === 'object';
 });
 
-export const MaybeEmptyObject = Match.Maybe(ObjectType);
+export const MaybeEmptyObject = Match.Where((obj)=>{
+    return typeof obj === 'object';
+});
 
 //from:https://stackoverflow.com/questions/201323/using-a-regular-expression-to-validate-an-email-address
 // TODO: find npm package
