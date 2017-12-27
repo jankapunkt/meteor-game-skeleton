@@ -9,7 +9,8 @@ addons:
       - google-chrome-stable
 
 language: node_js
-# Will use version from .nvmrc
+node_js:
+  "8"
 
 cache:
   directories:

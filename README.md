@@ -7,7 +7,24 @@
 
 A Meteor skeleton app as foundation for games.
 
-# About the Template
+# About the App
+
+### General Vision and Use Case
+
+* Provide out-of the box runnable app template for browser based games
+* Core-features like user login, registration, minimal application cycle
+* Extensible API, providig only the most basic functionalities
+* Server side methods and api decouples from ui (to allow developers to choose their own rendering engine)
+* Minimal app but fully tested
+
+
+### APP Flow
+
+<img src="./diagrams/app_flow.svg" />
+
+### Game Flow
+
+<img src="./diagrams/pooling.svg" />
 
 
 
