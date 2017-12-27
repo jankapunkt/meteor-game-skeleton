@@ -29,3 +29,5 @@ fortawesome:fontawesome
 accounts-base
 accounts-password
 reactive-dict
+practicalmeteor:sinon
+practicalmeteor:chai
