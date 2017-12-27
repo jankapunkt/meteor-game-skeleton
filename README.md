@@ -20,7 +20,7 @@ A Meteor skeleton app as foundation for games.
 
 ### APP Flow
 
-<img src="./diagrams/app_flow.svg" />
+<img src="./diagrams/app-flow.svg" />
 
 ### Game Flow
 
