@@ -30,7 +30,6 @@ export const getUser = MethodFactory.create(Object.assign({}, Pool.methods.get, 
             // NOTE: increase size to obtain multiple users
             found = PoolCollection.findOne({}, {skip:random});
         }
-        console.log(found);
         return found.userId;
     }
 }));

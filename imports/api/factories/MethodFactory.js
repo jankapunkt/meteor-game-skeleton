@@ -34,7 +34,6 @@ export const MethodFactory = {
         return new ValidatedMethod({
             name: definitions.name,
             validate(doc) {
-                console.log("methodfactory validate", doc);
                 try {
                     methodSchema.validate(doc, definitions.validateOptions || {});
                 } catch (err) {
